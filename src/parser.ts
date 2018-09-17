@@ -53,9 +53,7 @@ export interface StaticPropFilter {
 export const defaultParserOpts: ParserOptions = {};
 
 export interface FileParser {
-  parse(
-    filePathOrPaths: string | string[]
-  ): ComponentDoc[];
+  parse(filePathOrPaths: string | string[]): ComponentDoc[];
   parseWithProgramProvider(
     filePathOrPaths: string | string[],
     programProvider?: () => ts.Program
@@ -127,11 +125,9 @@ export function withCompilerOptions(
   parserOpts: ParserOptions = defaultParserOpts
 ): FileParser {
   return {
-    parse(
-      filePathOrPaths: string | string[]
-    ): ComponentDoc[] {
-      return this.parseWithProgramProvider(filePathOrPaths)
-  },
+    parse(filePathOrPaths: string | string[]): ComponentDoc[] {
+      return this.parseWithProgramProvider(filePathOrPaths);
+    },
     parseWithProgramProvider(
       filePathOrPaths: string | string[],
       programProvider?: () => ts.Program
@@ -655,8 +651,9 @@ function getTextValueOfFunctionProperty(
       const expr = (statement as ts.ExpressionStatement)
         .expression as ts.BinaryExpression;
       return (
-        expr.left && (expr.left as ts.PropertyAccessExpression).name.escapedText ===
-        propertyName
+        expr.left &&
+        (expr.left as ts.PropertyAccessExpression).name.escapedText ===
+          propertyName
       );
     })
     .filter(statement => {
@@ -703,6 +700,7 @@ function computeComponentName(exp: ts.Symbol, source: ts.SourceFile) {
   if (
     exportName === 'default' ||
     exportName === '__function' ||
+    exportName === 'StyledComponentClass' ||
     exportName === 'StatelessComponent'
   ) {
     // Default export for a file: named after file
